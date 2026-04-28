@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frontend Mentor Challenge – Terence Lewis</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ---------- Base reset & layout ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #1e1e2f;        /* dark background to match the screenshot feeling */
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* ---------- Top attribution bar ---------- */
+    .top-bar {
+      background: #0f0f1a;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #2a2a3d;
+      font-size: 0.9rem;
+    }
+
+    .challenge-info {
+      color: #ccccdd;
+    }
+
+    .challenge-info a,
+    .challenge-info a:visited {
+      color: #66bbff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .challenge-info a:hover {
+      color: #ffb347;
+      text-decoration: underline;
+    }
+
+    .verify-btn {
+      background: #2a2a3d;
+      color: #fff;
+      padding: 0.5rem 1.2rem;
+      border: 1px solid #444;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .verify-btn:hover {
+      background: #3a3a50;
+    }
+
+    /* ---------- Contact / social area ---------- */
+    .contact-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      padding: 1.5rem 1rem;
+      flex-wrap: wrap;
+    }
+
+    .phone-email {
+      text-align: left;
+      line-height: 1.8;
+    }
+
+    .phone-email p {
+      margin: 0.3rem 0;
+    }
+
+    .phone-email a {
+      color: #66bbff;
+      text-decoration: none;
+    }
+
+    .phone-email a:hover {
+      color: #ffb347;
+      text-decoration: underline;
+    }
+
+    .social-icon a {
+      font-size: 2rem;
+      color: #1877f2;            /* Facebook blue */
+      transition: transform 0.2s, color 0.2s;
+    }
+
+    .social-icon a:hover {
+      color: #ffb347;
+      transform: scale(1.2);
+    }
+
+    /* ---------- Game Rules modal (simple inline) ---------- */
+    .game-rules-trigger {
+      text-align: center;
+      margin: 0.5rem 0;
+    }
+
+    .game-rules-trigger button {
+      background: none;
+      border: 1px solid #555;
+      color: #aaa;
+      padding: 0.5rem 1.5rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s;
+    }
+
+    .game-rules-trigger button:hover {
+      border-color: #ffb347;
+      color: #ffb347;
+    }
+
+    .modal-overlay {
+      display: none;            /* hidden by default, can be shown with JS or checkbox hack */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .modal-content {
+      background: #2a2a3d;
+      color: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 90%;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      color: #ff4d4d;
+    }
+
+    /* ---------- Footer (your existing styles) ---------- */
+    .attribution {
+      padding: 1px;
+      margin: 0;
+      width: 100%;
+      bottom: 0;
+      padding-top: 2em;
+    }
+    .attribution {
+      font-size: 1.4rem;
+      color: hsla(55, 91%, 50%, 0.96);
+      text-align: center;
+    }
+    .attribution a,
+    .attribution a:visited {
+      color: hsl(270, 100%, 57%);
+    }
+    .attribution a:hover {
+      color: hsl(201, 100%, 50%);
+      text-decoration: none;
+    }
+
+    .contact-info {
+      margin: auto;
+      text-align: center;
+      letter-spacing: 4px;
+      display: block;
+      padding: 5px;
+      background: rgba(255, 255, 255, 0);
+    }
+    .contact-info p {
+      padding: 5px;
+      color: #2294fe;
+    }
+
+    .social-networks {
+      text-align: center;
+      padding-right: 2em;
+    }
+    .social-networks li {
+      display: inline;
+    }
+    .social-networks i {
+      font-size: 150%;
+      padding: 20px;
+      color: #2291ff;
+    }
+    .social-networks i:hover {
+      font-size: 150%;
+      padding: 20px;
+      color: #faf8f6;
+      background: rgb(0, 164, 252);
+      border-radius: 50%;
+      transition: 0.5s ease-in-out;
+      transform: scale(1.2);
+    }
+
+    .footer-container {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top attribution bar -->
+  <div class="top-bar">
+    <div class="challenge-info">
+      Challenge by <a href="https://www.frontendmentor.io" target="_blank">Frontend Mentor</a>. 
+      Coded by <strong>Terence E. A. Lewis</strong>.
+    </div>
+    <a href="https://github.com/AOL83" target="_blank" class="verify-btn">Verify on Github</a>
+  </div>
+
+  <!-- Main content area (placeholder) -->
+  <main>
+    <h2>Your Main Content Area</h2>
+    <p>This is where your page content goes.</p>
+  </main>
+
+  <!-- Contact row (phone, email, social icon) -->
+  <div class="contact-section">
+    <div class="phone-email">
+      <p>📞 +44 (0) 7**_***_*****</p>
+      <p>✉️ <a href="mailto:codestrategysolutions@gmail.com">codestrategysolutions@gmail.com</a></p>
+    </div>
+    <div class="social-icon">
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    </div>
+  </div>
+
+  <!-- Game Rules trigger (opens modal) -->
+  <div class="game-rules-trigger">
+    <button id="openRulesBtn">Game Rules</button>
+  </div>
+
+  <!-- Simple modal for Game Rules -->
+  <div class="modal-overlay" id="rulesModal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModal">&times;</button>
+      <h3>Game Rules</h3>
+      <p>Here you can describe the rules of your game or competition.</p>
+    </div>
+  </div>
+
+  <!-- Footer using your existing CSS classes -->
+  <footer class="footer-container">
+    <div class="contact-info">
+      <p>📧 terence@example.com</p>
+      <p>📍 London, UK</p>
+    </div>
+
+    <div class="attribution">
+      Terence Lewis &copy; 2026
+      <br>
+      <a href="https://github.com/AOL83" target="_blank">GitHub</a> ·
+      <a href="https://waterfallslt.substack.com" target="_blank">Substack</a>
+    </div>
+
+    <ul class="social-networks">
+      <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+      <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+      <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+      <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+    </ul>
+  </footer>
+
+  <!-- Tiny script to toggle the rules modal -->
+  <script>
+    const openBtn = document.getElementById('openRulesBtn');
+    const modal = document.getElementById('rulesModal');
+    const closeBtn = document.getElementById('closeModal');
+
+    openBtn.addEventListener('click', () => {
+      modal.style.display = 'flex';
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) modal.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
